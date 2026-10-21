@@ -1,0 +1,102 @@
+{
+  "title": "About MITIME",
+  "intro": "MITIME, *Entanglements of Migration and Time in Post-industrial Urban Europe*, is a Marie Skłodowska-Curie Doctoral Network coordinated by the University of Oulu. It brings together seven universities of the UNIC alliance of post-industrial cities and seven non-academic partners to train a new generation of migration scholars.\n\nThe network treats time as a resource that is unequally distributed. Waiting for papers, working on temporary contracts or living with an uncertain future all shape how people can make a life in the city. MITIME also follows the call to *de-migranticise* research: to study how institutions, discourses and practices produce “the migrant”, rather than treating migrants as a problem to be explained.",
+  "agendas": [
+    {
+      "title": "Time and the everyday",
+      "text": "How temporal insecurity shapes social ties, work, homemaking, narratives and everyday bordering."
+    },
+    {
+      "title": "Time and institutions",
+      "text": "How states, employers, cities and other institutions govern and sort people through time."
+    },
+    {
+      "title": "Time and future-making",
+      "text": "How migrants, communities and cities imagine and build their futures."
+    }
+  ],
+  "themes": [
+    {
+      "code": "WP1",
+      "name": "Connectivities",
+      "lead": "oulu",
+      "text": "How temporal in/security shapes social, material and digital connections."
+    },
+    {
+      "code": "WP2",
+      "name": "Labour",
+      "lead": "rub",
+      "text": "Precarious work, temporal precarity and the institutional temporal order of labour."
+    },
+    {
+      "code": "WP3",
+      "name": "Placemaking",
+      "lead": "ucc",
+      "text": "Homemaking, border temporalities and diasporic identifications."
+    },
+    {
+      "code": "WP4",
+      "name": "Narrative",
+      "lead": "uliege",
+      "text": "Memory, displacement and the collective narratives cities tell about themselves."
+    },
+    {
+      "code": "WP5",
+      "name": "Governance",
+      "lead": "eur",
+      "text": "How policies, services and citizenship regimes govern migration through time."
+    }
+  ],
+  "principles": [
+    "Interdisciplinary",
+    "International",
+    "Intersectoral",
+    "Inclusive",
+    "Intersectional",
+    "Decolonial and anti-racist"
+  ],
+  "training": [
+    {
+      "name": "Introduction to MITIME course",
+      "format": "Online",
+      "when": "Jan–Mar 2027",
+      "host": "Ruhr University Bochum"
+    },
+    {
+      "name": "Transferable Skills Workshops I–IV",
+      "format": "Online",
+      "when": "2026–2029",
+      "host": "University of Oulu"
+    },
+    {
+      "name": "Training School I: Reflexive and Engaged Research in Migration",
+      "format": "In person",
+      "when": "Aug 2027",
+      "host": "University College Cork"
+    },
+    {
+      "name": "Research Forums I–III",
+      "format": "Online",
+      "when": "2028–2029",
+      "host": "Erasmus University Rotterdam"
+    },
+    {
+      "name": "PhD School “Migrations et Diversité Culturelle”",
+      "format": "In person",
+      "when": "Jun 2028",
+      "host": "University of Liège"
+    },
+    {
+      "name": "Training School II: Decolonial and Antiracist Research and Practice",
+      "format": "In person",
+      "when": "Aug 2028",
+      "host": "Koç University, Istanbul"
+    },
+    {
+      "name": "MITIME Research Colloquium",
+      "format": "Online",
+      "when": "Every semester",
+      "host": "Rotating"
+    }
+  ]
+}

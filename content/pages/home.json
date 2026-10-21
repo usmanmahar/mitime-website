@@ -1,0 +1,34 @@
+{
+  "hero_kicker": "MSCA Doctoral Network [2026–2030]",
+  "hero_title": "Migration, time and the post-industrial city",
+  "hero_text": "MITIME trains fifteen doctoral researchers across seven European universities to study how unequal control over time (waiting, temporary status, precarity, uncertain futures) shapes life in Europe’s post-industrial cities.",
+  "intro_title": "Beyond departure, arrival and settlement",
+  "intro_body": "Migration research has long followed a straight line: people leave, arrive and settle. MITIME looks instead at the many times of migration: the waiting rooms, provisional permits, short contracts and imagined futures that decide who belongs in a city and on what terms.\n\nWorking with city administrations, migrant organisations, cultural institutions and policy bodies, our doctoral candidates study connectivities, labour, placemaking, narrative and governance in cities from Oulu to Istanbul.",
+  "stats": [
+    {
+      "value": "15",
+      "label": "doctoral candidates"
+    },
+    {
+      "value": "7",
+      "label": "universities"
+    },
+    {
+      "value": "7",
+      "label": "associated partners"
+    },
+    {
+      "value": "48",
+      "label": "months, 2026–2030"
+    }
+  ],
+  "cities": [
+    "Oulu",
+    "Bochum",
+    "Liège",
+    "Cork",
+    "Istanbul",
+    "Bilbao",
+    "Rotterdam"
+  ]
+}

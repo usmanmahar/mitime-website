@@ -1,0 +1,20 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="robots" content="noindex">
+  <title>MITIME website editor</title>
+  <link rel="icon" href="/assets/img/favicon.png" type="image/png">
+  <!-- Login for editors (Netlify Identity) -->
+  <script src="https://identity.netlify.com/v1/netlify-identity-widget.js"></script>
+</head>
+<body>
+  <!-- Decap CMS: the editing interface. Its settings are in config.yml next to this file. -->
+  <script src="https://unpkg.com/decap-cms@^3.0.0/dist/decap-cms.js"></script>
+  <script>
+    // Show previews in the site's own fonts and colours
+    CMS.registerPreviewStyle('/assets/css/site.css');
+  </script>
+</body>
+</html>

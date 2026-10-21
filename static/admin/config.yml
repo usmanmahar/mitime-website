@@ -1,0 +1,241 @@
+# MITIME website editor (Decap CMS) — https://decapcms.org/docs/
+# Editors log in at https://migrationtime.eu/admin/ with the email address they were invited with.
+# Every "Publish" saves a change to the site's Git repository; Netlify then rebuilds the site (about 1 minute).
+
+backend:
+  name: git-gateway        # login via Netlify Identity; editors do not need a GitHub account
+  branch: main
+
+# For testing on your own computer: run `npx decap-server` next to `npm run serve`, then open http://localhost:8080/admin/
+local_backend: true
+
+# Drafts → In review → Ready, before anything goes live. Remove this line to publish straight away.
+publish_mode: editorial_workflow
+
+site_url: https://migrationtime.eu
+display_url: https://migrationtime.eu
+logo_url: /assets/img/logomark-black.svg
+
+# Uploaded photos and files
+media_folder: static/uploads
+public_folder: /uploads
+
+slug:
+  encoding: ascii
+  clean_accents: true
+  sanitize_replacement: "-"
+
+collections:
+
+  # ───────────────────────── Doctoral candidates
+  - name: dcs
+    label: Doctoral candidates
+    label_singular: Doctoral candidate
+    description: One entry per doctoral candidate (DC1–DC15). Add the name, photo and a short bio once they are in post.
+    folder: content/dcs
+    extension: json
+    format: json
+    create: true
+    delete: false
+    identifier_field: title
+    slug: "dc{{fields.number}}"
+    summary: "DC{{number}} · {{name}} · {{title}}"
+    sortable_fields: [number, name, host]
+    fields:
+      - { label: DC number, name: number, widget: number, value_type: int, min: 1, max: 30 }
+      - { label: Name, name: name, widget: string, required: false, hint: "Leave empty until the candidate has agreed to be named on the website." }
+      - { label: Photo, name: photo, widget: image, required: false, hint: "Square photo, at least 600 × 600 px. Only with the person's consent." }
+      - { label: Short bio, name: bio, widget: markdown, required: false, buttons: [bold, italic, link], editor_components: [], hint: "2–4 sentences in the third person." }
+      - { label: Status, name: status, widget: select, options: ["In post", "Recruiting"], default: "In post" }
+      - { label: Project title, name: title, widget: string }
+      - label: Theme
+        name: theme
+        widget: select
+        options:
+          - { label: "WP1 Connectivities", value: WP1 }
+          - { label: "WP2 Labour", value: WP2 }
+          - { label: "WP3 Placemaking", value: WP3 }
+          - { label: "WP4 Narrative", value: WP4 }
+          - { label: "WP5 Governance", value: WP5 }
+      - { label: Host university, name: host, widget: relation, collection: institutions, value_field: "{{slug}}", search_fields: [name, short_name], display_fields: [name] }
+      - { label: Supervisor, name: main_supervisor, widget: relation, collection: people, value_field: "{{slug}}", search_fields: [name], display_fields: [name] }
+      - { label: Co-supervisor, name: co_supervisor, widget: relation, collection: people, value_field: "{{slug}}", search_fields: [name], display_fields: [name], required: false }
+      - { label: Secondments, name: secondments, widget: list, field: { label: Organisation, name: organisation, widget: string }, required: false }
+      - { label: Project summary, name: summary, widget: markdown, buttons: [bold, italic, link, bulleted-list], editor_components: [] }
+      - { label: Email, name: email, widget: string, required: false }
+      - { label: ORCID link, name: orcid, widget: string, required: false, hint: "e.g. https://orcid.org/0000-0000-0000-0000" }
+      - { label: Personal or university profile link, name: website, widget: string, required: false }
+
+  # ───────────────────────── People
+  - name: people
+    label: People
+    label_singular: Person
+    description: Supervisors, coordinators and staff, grouped by university on the People page.
+    folder: content/people
+    extension: json
+    format: json
+    create: true
+    identifier_field: name
+    slug: "{{slug}}"
+    summary: "{{name}} · {{institution}} · {{mitime_role}}"
+    sortable_fields: [name, institution, order]
+    fields:
+      - { label: Full name, name: name, widget: string, hint: "Without title, e.g. Roger Norum" }
+      - { label: Title, name: prefix, widget: select, options: ["Dr", "Prof.", "Prof. Dr", "Assoc. Prof."], required: false }
+      - { label: Position, name: position, widget: string, required: false, hint: "Job title at the university, e.g. Senior Lecturer" }
+      - { label: Role in MITIME, name: mitime_role, widget: string, required: false, hint: "e.g. WP3 lead; supervisor" }
+      - { label: Field, name: field, widget: string, required: false }
+      - { label: University, name: institution, widget: relation, collection: institutions, value_field: "{{slug}}", search_fields: [name, short_name], display_fields: [name] }
+      - { label: Photo, name: photo, widget: image, required: false, hint: "Square photo, at least 400 × 400 px" }
+      - { label: Profile link, name: profile_url, widget: string, required: false }
+      - { label: Email, name: email, widget: string, required: false }
+      - { label: Order on page, name: order, widget: number, value_type: int, default: 10, hint: "Lower numbers appear first within the university" }
+
+  # ───────────────────────── Universities
+  - name: institutions
+    label: Universities
+    label_singular: University
+    folder: content/institutions
+    extension: json
+    format: json
+    create: true
+    delete: false
+    identifier_field: name
+    slug: "{{fields.short_name}}"
+    summary: "{{name}} ({{city}})"
+    fields:
+      - { label: Name, name: name, widget: string }
+      - { label: Short name, name: short_name, widget: string, hint: "Used on filter buttons, e.g. Cork" }
+      - { label: City, name: city, widget: string }
+      - { label: Country, name: country, widget: string }
+      - { label: Website, name: website, widget: string, required: false }
+      - { label: Logo, name: logo, widget: image, required: false }
+      - { label: Role in MITIME, name: description, widget: text }
+      - { label: Order, name: order, widget: number, value_type: int, default: 10 }
+
+  # ───────────────────────── Associated partners
+  - name: partners
+    label: Associated partners
+    label_singular: Associated partner
+    folder: content/partners
+    extension: json
+    format: json
+    create: true
+    identifier_field: name
+    slug: "{{slug}}"
+    fields:
+      - { label: Name, name: name, widget: string }
+      - { label: Country, name: country, widget: string }
+      - { label: Website, name: website, widget: string, required: false }
+      - { label: Logo, name: logo, widget: image, required: false }
+      - { label: Description, name: description, widget: text }
+      - { label: Order, name: order, widget: number, value_type: int, default: 10 }
+
+  # ───────────────────────── News and events
+  - name: news
+    label: News and events
+    label_singular: News item
+    folder: content/news
+    extension: json
+    format: json
+    create: true
+    identifier_field: title
+    slug: "{{year}}-{{month}}-{{day}}-{{slug}}"
+    summary: "{{date}} · {{type}} · {{title}}"
+    sortable_fields: [date, title]
+    fields:
+      - { label: Title, name: title, widget: string }
+      - { label: Date, name: date, widget: datetime, format: "YYYY-MM-DD", date_format: "DD.MM.YYYY", time_format: false, picker_utc: true }
+      - { label: Type, name: type, widget: select, options: ["News", "Event", "Blog"], default: "News" }
+      - { label: Image, name: image, widget: image, required: false, hint: "Landscape, at least 1200 px wide. Leave empty to use a brand graphic." }
+      - { label: Summary, name: summary, widget: text, hint: "One or two sentences, shown on cards and in search results" }
+      - { label: Text, name: body, widget: markdown }
+
+  # ───────────────────────── Pages
+  - name: pages
+    label: Pages
+    files:
+      - label: Home page
+        name: home
+        file: content/pages/home.json
+        fields:
+          - { label: Kicker above the title, name: hero_kicker, widget: string }
+          - { label: Main title, name: hero_title, widget: string }
+          - { label: Introduction under the title, name: hero_text, widget: text }
+          - { label: "Section title: why time", name: intro_title, widget: string }
+          - { label: "Section text: why time", name: intro_body, widget: markdown, buttons: [bold, italic, link], editor_components: [] }
+          - label: Numbers
+            name: stats
+            widget: list
+            fields:
+              - { label: Number, name: value, widget: string }
+              - { label: Label, name: label, widget: string }
+          - { label: Cities, name: cities, widget: list, field: { label: City, name: city, widget: string } }
+
+      - label: About page
+        name: about
+        file: content/pages/about.json
+        fields:
+          - { label: Page title, name: title, widget: string }
+          - { label: Introduction, name: intro, widget: markdown }
+          - label: Research agendas
+            name: agendas
+            widget: list
+            fields:
+              - { label: Title, name: title, widget: string }
+              - { label: Text, name: text, widget: text }
+          - label: Research themes (work packages)
+            name: themes
+            widget: list
+            allow_add: false
+            fields:
+              - { label: Code, name: code, widget: string, hint: "Don't change: DC entries refer to this code" }
+              - { label: Name, name: name, widget: string }
+              - { label: Lead university, name: lead, widget: relation, collection: institutions, value_field: "{{slug}}", search_fields: [name], display_fields: [name] }
+              - { label: Description, name: text, widget: text }
+          - { label: Guiding principles, name: principles, widget: list, field: { label: Principle, name: principle, widget: string } }
+          - label: Training programme
+            name: training
+            widget: list
+            fields:
+              - { label: Name, name: name, widget: string }
+              - { label: Format, name: format, widget: select, options: ["Online", "In person", "Hybrid"] }
+              - { label: When, name: when, widget: string }
+              - { label: Led by, name: host, widget: string }
+
+      - label: Contact page
+        name: contact
+        file: content/pages/contact.json
+        fields:
+          - { label: Page title, name: title, widget: string }
+          - { label: Text, name: body, widget: markdown }
+
+  # ───────────────────────── Site settings
+  - name: settings
+    label: Site settings
+    files:
+      - label: Site settings
+        name: settings
+        file: content/settings.json
+        fields:
+          - { label: Short name, name: site_title, widget: string }
+          - { label: Full project title, name: full_title, widget: string }
+          - { label: Tagline (footer and search results), name: tagline, widget: text }
+          - { label: Contact email, name: contact_email, widget: string }
+          - { label: Postal address, name: address, widget: string }
+          - label: Social media links
+            name: social
+            widget: object
+            fields:
+              - { label: Bluesky, name: bluesky, widget: string, required: false }
+              - { label: Instagram, name: instagram, widget: string, required: false }
+              - { label: LinkedIn, name: linkedin, widget: string, required: false }
+              - { label: TikTok, name: tiktok, widget: string, required: false }
+          - label: Announcement bar (top of every page)
+            name: announcement
+            widget: object
+            fields:
+              - { label: Show, name: show, widget: boolean, default: false }
+              - { label: Text, name: text, widget: string, required: false }
+              - { label: Link, name: link, widget: string, required: false }
+          - { label: EU funding statement (required, keep), name: funding_statement, widget: text }
